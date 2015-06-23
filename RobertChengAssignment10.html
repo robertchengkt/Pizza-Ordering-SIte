@@ -1,0 +1,263 @@
+<!--
+Project Name：			Robert's Programming Assignment 10
+Date: 					06/09/2015
+Programmer Name: 		Robert Cheng
+Project Description:	A pizza ordering page with functions including input, 
+						input validation and popup feedbacks
+-->
+<html>
+  <head>
+    <title>Robert's Programming Assignment 10</title>
+  <script>
+/* 
+Define what happens when click on the submit button
+*/
+function doSubmit()
+{
+  if (validateText() != true)
+{
+  i = validateText()
+  alert(i);
+  return; 
+}
+
+if (validateRadio() == false)
+{
+  alert("The size of the pizza is not selected!");
+  return; 
+}
+
+if (boxCheck() == true)
+{
+	alert("No topping is selected !");
+	return;
+}
+
+if (validateZip() == false)
+{
+	alert("The formate of the zip code is wrong!");
+	return;
+}
+
+if (validatePhone() == false)
+{
+	alert("The formate of the phone number is wrong !");
+	return;
+}
+
+if (validateEmail() == false)
+{
+	alert("The formate of the email address is wrong !");
+	return;
+}
+/* 
+Set the content of the popup window as a variable
+*/
+  
+  newWindow();
+  return; 
+}
+/* 
+Define a function that print out the receipt in a new window
+*/
+function newWindow()
+{
+  var selectToppings = getToppings()
+  var name = document.PizzaForm.customer.value
+  var city = document.PizzaForm.city.value
+  var output = "Name: "+ capWord(name)+ "\n"+ "Address: "+ document.PizzaForm.address.value +"\n" + "City: "+ capWord(city) +"\n" + "State: "+ document.PizzaForm.state.value +"\n" + "Zip: "+ document.PizzaForm.zip.value +"\n" + "Phone: "+ document.PizzaForm.phone.value +"\n" + "Email: "+ document.PizzaForm.email.value +"\n" + "Toppings: ";
+  var w = window.open("Print Receipt");
+  w.document.write(output+selectToppings);
+}
+/* 
+Define a function that make the first case of every inputed word uppercase and the rest lowercase
+*/
+function capWord(input)
+{
+	var capitalized = input.substr(0, 1).toUpperCase() + input.substr(1).toLowerCase();
+	return capitalized;
+}
+/* 
+Define a function that make sure that all the basic deliver information 
+*/
+function validateText()
+{
+     var customer = document.PizzaForm.customer.value;
+     if (customer.length == 0) return "Name is missing";
+     var address = document.PizzaForm.address.value;
+     if (address.length == 0) return "Address is missing";
+     var city = document.PizzaForm.city.value;
+     if (city.length == 0) return "City is missing";
+     var phone = document.PizzaForm.phone.value;
+     if (phone.length == 0) return "Phone number is missing";
+     var email = document.PizzaForm.email.value;
+     if (email.length == 0) return "Email address is missing";
+     return true;
+}
+/* 
+Define a function that validate the formate of the input zip code
+*/
+function validateZip()
+{
+	var zipcode =  /^\d{5}$/;
+	var zipinput = document.PizzaForm.zip.value;
+	return zipcode.test(zipinput);
+}
+
+/* 
+Define a function that validate the formate of the input phone number
+*/
+function validatePhone()  
+{  
+  var phoneStyle = /^\(?([0-9]{3})\)?[- ]?([0-9]{3})[- ]?([0-9]{4})$/;  
+  var phoneNum = document.PizzaForm.phone.value;
+  return phoneStyle.test(phoneNum);
+}
+/* 
+Define a function that validate the formate of the input email address
+*/
+function validateEmail()  
+{  
+  var emailStyle = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;  
+  var emailinput = document.PizzaForm.email.value;
+  return emailStyle.test(emailinput);
+}
+/* 
+Define a function that make sure the size is selected
+*/
+function validateRadio()
+{
+    if (document.PizzaForm.sizes[0].checked) return true;
+    if (document.PizzaForm.sizes[1].checked) return true;
+    if (document.PizzaForm.sizes[2].checked) return true;
+    if (document.PizzaForm.sizes[3].checked) return true;
+    return false;
+}
+/* 
+Define a function that check if any checkbox of toppings is checked
+*/
+function boxCheck()
+{
+	var a = document.getElementsByName("toppings");
+	for(var i=0; i<a.length; i++)
+   	if(a[i].checked)
+   	{
+      return false;
+    }
+	return true;
+}
+/* 
+Define the function that get all the toppings selected
+*/
+function getToppings()
+{
+	var selected = "";
+	var b = document.getElementsByName("toppings");
+	for(var i=0; i<b.length; i++)
+	if(b[i].checked)
+   	{
+      selected = selected.concat(" "+ b[i].value);
+    }
+	return selected;
+}
+/* 
+Define the function of the clear button
+*/
+function doClear()
+{
+  document.PizzaForm.customer.value = "";
+  document.PizzaForm.address.value = "";
+  document.PizzaForm.city.value = "";
+  document.PizzaForm.state.value = "PA";
+  document.PizzaForm.zip.value = "";
+  document.PizzaForm.phone.value = "";
+  document.PizzaForm.email.value = "";
+  document.PizzaForm.sizes[0].checked = false;
+  document.PizzaForm.sizes[1].checked = false;
+  document.PizzaForm.sizes[2].checked = false;
+  document.PizzaForm.sizes[3].checked = false;
+  document.PizzaForm.toppings[0].checked = false;
+  document.PizzaForm.toppings[1].checked = false;
+  document.PizzaForm.toppings[2].checked = false;
+  document.PizzaForm.toppings[3].checked = false;
+  document.PizzaForm.toppings[4].checked = false;
+  document.PizzaForm.toppings[5].checked = false;
+  document.PizzaForm.toppings[6].checked = false;
+  document.PizzaForm.toppings[7].checked = false;
+  document.PizzaForm.toppings[8].checked = false;
+  document.PizzaForm.toppings[9].checked = false;
+  return;
+}
+</script>
+<style>
+/* CSS style for the headings */
+  heading{
+    width:50%;
+    float:left;
+    text-align:center;
+    font-size: 150%;
+  }
+</style>
+</head>
+  <body bgcolor="lightgrey">
+  <!--
+	Below is the html part of the webpage, with different input style and using the functions
+	defined in the script part by assigning them to Onclick attribute
+	-->
+  <div>
+    <heading>Pizza Menu</heading>
+    <heading>Today's Choice</heading>
+  <!--
+  iFrames that contains menu and daily special offer information
+  -->
+  </div>
+  <iframe src="Menu.html" align="left" width="49.5%" height="300"></iframe>
+  <iframe src="PizzaPic.html"style="display:block" class="center" align="right" width="49.5%" height="300" scrolling="no"></iframe>
+    <form name="PizzaForm" style="text-align:center">
+      <h1>The JavaScript Pizza Parlor</h1>
+      <p>
+        <h4>Step 1: Enter your name, address, and phone number:</h4>
+        <font face="Courier New">
+          Name: &nbsp;&nbsp;&nbsp;<input name="customer" size="50"
+          type="text"><br>
+          Address: <input name="address" size="50" type="text"><br>
+          City: &nbsp;&nbsp;&nbsp;<input name="city" size="15" type="text">
+          State: 
+				<select name = "state">
+				<option value="PA">PA</option>
+				<option value="NJ">NJ</option>
+				<option value="NY">NY</option>
+				<option value="DE">DE</option>
+				</select>
+          Zip:&nbsp;&nbsp;<input name="zip" type="text" size="15"><br>
+          Phone: &nbsp;&nbsp;<input name="phone" size="50" type="text"><br>
+          Email: &nbsp;&nbsp;<input name="email" size="50" type="text"><br>
+        </font>
+	</p>
+	<p>
+        <h4>Step 2: Select the size of pizza you want:</h4>
+        <font face="Courier New">
+          <input name="sizes" type="radio">Small
+          <input name="sizes" type="radio">Medium
+          <input name="sizes" type="radio">Large
+          <input name="sizes" type="radio">Jumbo<br>
+		</font> 
+	</p>
+	<p>
+        <h4>Step 3: Select the pizza toppings you want:</h4>
+        <font face="Courier New">
+          <input name="toppings" type="checkbox" value="Pepperoni">Pepperoni
+          <input name="toppings" type="checkbox" value="Canadian Bacon">Canadian Bacon
+          <input name="toppings" type="checkbox" value="Sausage">Sausage<br>
+          <input name="toppings" type="checkbox" value="Mushrooms">Mushrooms
+          <input name="toppings" type="checkbox" value="Pineapple">Pineapple
+          <input name="toppings" type="checkbox" value="Black Olives">Black Olives<br>
+          <input name="toppings" type="checkbox" value="Green Peppers">Green Peppers
+          <input name="toppings" type="checkbox" value="Extra Cheese">Extra Cheese
+          <input name="toppings" type="checkbox" value="None">None<br>
+		</font> 
+	</p>
+	  <input type="button" value="Submit Order" onClick="doSubmit()">
+      <input type="button" value="Clear Entries" onClick="doClear()">
+    </form>
+  </body>
